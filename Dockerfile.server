@@ -1,0 +1,11 @@
+FROM ubuntu:latest
+
+COPY --from=golang:1.22.2 /usr/local/go/ /usr/local/go/
+ENV PATH="/usr/local/go/bin:${PATH}"
+
+COPY . /burrow
+
+WORKDIR /burrow
+RUN go build -o burrow-server cmd/server/main.go
+
+ENTRYPOINT ["/burrow/burrow-server"]
